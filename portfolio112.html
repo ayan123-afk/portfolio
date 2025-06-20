@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Professor Ayan - AI Engineer</title>
+  <title>Professor Ayan </title>
   <link rel="icon" href="https://i.postimg.cc/rwj65bN2/ptr8-IPsa-400x400.jpg" type="image/jpeg" />
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -103,7 +103,7 @@
       color: #00ff88;
     }
 
-    .telegram-btn, .whatsapp-btn {
+    .glow-btn {
       display: inline-block;
       margin: 15px 10px 0 10px;
       padding: 12px 25px;
@@ -115,12 +115,36 @@
       text-decoration: none;
       transition: all 0.3s ease;
       box-shadow: 0 0 10px #00ff88;
+      position: relative;
+      overflow: hidden;
     }
 
-    .telegram-btn:hover, .whatsapp-btn:hover {
+    .glow-btn:hover {
       background: linear-gradient(135deg, #006633, #00ff88);
       transform: scale(1.05);
       box-shadow: 0 0 20px #00ff88;
+    }
+
+    .glow-btn.clicked::after {
+      content: '';
+      position: absolute;
+      width: 300%;
+      height: 300%;
+      top: 50%;
+      left: 50%;
+      pointer-events: none;
+      background: rgba(0, 255, 136, 0.3);
+      border-radius: 50%;
+      transform: translate(-50%, -50%) scale(0);
+      animation: ripple 0.6s ease-out;
+      z-index: 0;
+    }
+
+    @keyframes ripple {
+      to {
+        transform: translate(-50%, -50%) scale(1);
+        opacity: 0;
+      }
     }
 
     footer {
@@ -136,8 +160,6 @@
 <!-- Matrix & Particles Background -->
 <canvas id="matrix"></canvas>
 <canvas id="particles"></canvas>
-
-<!-- Overlay -->
 <div class="overlay"></div>
 
 <!-- Content -->
@@ -168,14 +190,14 @@
       </ul>
     </div>
 
-    <a href="https://www.instagram.com/ayanx_offical/" class="telegram-btn" target="_blank">Join My Instagram</a>
-    <a href="https://chat.whatsapp.com/LMwqr7EspJJHjHRvBi0zEw" class="whatsapp-btn" target="_blank">Join My WhatsApp</a>
+    <a href="https://www.instagram.com/ayanx_offical/" class="glow-btn" onclick="glowClick(this)" target="_blank">Join My Instagram</a>
+    <a href="https://chat.whatsapp.com/LMwqr7EspJJHjHRvBi0zEw" class="glow-btn" onclick="glowClick(this)" target="_blank">Join My WhatsApp</a>
   </div>
 
   <footer>© 2025 PROxAYAN. All rights reserved.</footer>
 </div>
 
-<!-- JavaScript Animations -->
+<!-- JavaScript for animations -->
 <script>
   // MATRIX CODE
   const canvas = document.getElementById("matrix");
@@ -205,7 +227,7 @@
   }
   setInterval(drawMatrix, 40);
 
-  // PARTICLE CODE
+  // PARTICLES
   const canvasP = document.getElementById('particles');
   const ctxP = canvasP.getContext('2d');
   canvasP.width = window.innerWidth;
@@ -247,9 +269,16 @@
     particles.forEach(p => p.update());
     requestAnimationFrame(animateParticles);
   }
-
   animateParticles();
 
+  // GLOW CLICK
+  function glowClick(button) {
+    button.classList.remove('clicked');
+    void button.offsetWidth;
+    button.classList.add('clicked');
+  }
+
+  // Resize
   window.addEventListener("resize", () => {
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
